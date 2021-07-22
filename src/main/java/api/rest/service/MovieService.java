@@ -26,4 +26,11 @@ public class MovieService {
     public Movie save(Movie movie) {
         return null;
     }
+
+    public void delete(long id) {
+        movies.remove(findById(id));
+    }
+
+    public void replace(Movie movie) {
+    }
 }
