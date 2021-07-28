@@ -1,6 +1,10 @@
 package api.rest.service;
 
 import api.rest.domain.Movie;
+import api.rest.repository.MovieRepository;
+import api.rest.requests.MoviePostRequestBody;
+import api.rest.requests.MoviePutRequestBody;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -8,29 +12,34 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class MovieService {
 
-    private List<Movie> movies = List.of(new Movie(1L,"O Conde de Monte Cristo"), new Movie(2L,"Stalone Cobra"));;
+    private final MovieRepository movieRepository;
+
     public List<Movie> listAll(){
-        return movies;
+        return movieRepository.findAll();
     }
 
-    public Movie findById(long id){
-        return movies.stream().
-                filter(movie -> movie.getId()
-                        .equals(id))
-                        .findFirst()
-                        .orElseThrow(()-> new ResponseStatusException(HttpStatus.BAD_REQUEST,"Movie id not found"));
+    public Movie findByIdOrThrowBadRequestException(long id){
+        return movieRepository.findById(id)
+                .orElseThrow(()-> new ResponseStatusException(HttpStatus.BAD_REQUEST,"Movie id not found"));
     }
 
-    public Movie save(Movie movie) {
-        return null;
+    public Movie save(MoviePostRequestBody moviePostRequestBody) {
+        return movieRepository.save(Movie.builder().name(moviePostRequestBody.getName()).build());
     }
 
     public void delete(long id) {
-        movies.remove(findById(id));
+        movieRepository.delete(findByIdOrThrowBadRequestException(id));
     }
 
-    public void replace(Movie movie) {
+    public void replace(MoviePutRequestBody moviePutRequestBody) {
+        findByIdOrThrowBadRequestException(moviePutRequestBody.getId());
+        Movie movie = Movie.builder()
+                .id(moviePutRequestBody.getId())
+                .name(moviePutRequestBody.getName())
+                .build();
+        movieRepository.save(movie);
     }
 }

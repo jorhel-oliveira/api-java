@@ -1,6 +1,8 @@
 package api.rest.controller;
 
 import api.rest.domain.Movie;
+import api.rest.requests.MoviePostRequestBody;
+import api.rest.requests.MoviePutRequestBody;
 import api.rest.service.MovieService;
 import api.rest.utils.DateUtil;
 import lombok.AllArgsConstructor;
@@ -29,12 +31,12 @@ public class MovieController {
 
     @GetMapping(path = "/{id}")
     public ResponseEntity<Movie> findById(@PathVariable long id){
-        return ResponseEntity.ok(movieService.findById(id));
+        return ResponseEntity.ok(movieService.findByIdOrThrowBadRequestException(id));
     }
 
     @PostMapping
-    public ResponseEntity<Movie> save(@RequestBody Movie movie){
-        return new ResponseEntity<>(movieService.save(movie),HttpStatus.CREATED);
+    public ResponseEntity<Movie> save( @RequestBody MoviePostRequestBody moviePostRequestBody){
+        return new ResponseEntity<>(movieService.save(moviePostRequestBody),HttpStatus.CREATED);
     }
 
     @DeleteMapping(path = "/{id}")
@@ -44,8 +46,8 @@ public class MovieController {
     }
 
     @PutMapping()
-    public ResponseEntity<Void> replace(@RequestBody Movie movie){
-        movieService.replace(movie);
+    public ResponseEntity<Void> replace(@RequestBody MoviePutRequestBody moviePutRequestBody){
+        movieService.replace(moviePutRequestBody);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
