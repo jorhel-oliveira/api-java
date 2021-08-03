@@ -1,6 +1,7 @@
 package api.rest.service;
 
 import api.rest.domain.Movie;
+import api.rest.mapper.MovieMapper;
 import api.rest.repository.MovieRepository;
 import api.rest.requests.MoviePostRequestBody;
 import api.rest.requests.MoviePutRequestBody;
@@ -27,7 +28,7 @@ public class MovieService {
     }
 
     public Movie save(MoviePostRequestBody moviePostRequestBody) {
-        return movieRepository.save(Movie.builder().name(moviePostRequestBody.getName()).build());
+        return movieRepository.save(MovieMapper.INSTANCE.toMovie(moviePostRequestBody));
     }
 
     public void delete(long id) {
@@ -35,11 +36,9 @@ public class MovieService {
     }
 
     public void replace(MoviePutRequestBody moviePutRequestBody) {
-        findByIdOrThrowBadRequestException(moviePutRequestBody.getId());
-        Movie movie = Movie.builder()
-                .id(moviePutRequestBody.getId())
-                .name(moviePutRequestBody.getName())
-                .build();
+        Movie savedMovie = findByIdOrThrowBadRequestException(moviePutRequestBody.getId());
+        Movie movie = MovieMapper.INSTANCE.toMovie(moviePutRequestBody);
+        movie.setId(savedMovie.getId());
         movieRepository.save(movie);
     }
 }
