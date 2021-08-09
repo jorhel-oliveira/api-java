@@ -13,5 +13,5 @@ public abstract class MovieMapper {
 
     public abstract Movie toMovie(MoviePostRequestBody moviePostRequestBody);
 
-    public abstract Movie toMovie(MoviePutRequestBody moviePutRequestBody);
+    public abstract Movie toMovie(MoviePutRequestBody moviePostRequestBody);
 }

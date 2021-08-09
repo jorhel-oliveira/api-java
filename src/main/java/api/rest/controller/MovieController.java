@@ -34,6 +34,11 @@ public class MovieController {
         return ResponseEntity.ok(movieService.findByIdOrThrowBadRequestException(id));
     }
 
+    @GetMapping(path = "/find")
+    public ResponseEntity<List<Movie>> findByName(@RequestParam String name){
+        return ResponseEntity.ok(movieService.findByName(name));
+    }
+
     @PostMapping
     public ResponseEntity<Movie> save( @RequestBody MoviePostRequestBody moviePostRequestBody){
         return new ResponseEntity<>(movieService.save(moviePostRequestBody),HttpStatus.CREATED);
