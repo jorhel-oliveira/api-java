@@ -24,15 +24,11 @@
     <autoscroll-to-editor value="false" />
     <autoscroll-from-editor value="true" />
     <show-object-properties value="true" />
-    <loaded-nodes>
-      <connection connection-id="0720e25e-9837-4c7d-9999-0a231fefb265">
-        <schema name="movie" object-types="table, view, procedure, function, constraint, index, column, dataset trigger" />
-      </connection>
-    </loaded-nodes>
+    <loaded-nodes />
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
     <connection id="0720e25e-9837-4c7d-9999-0a231fefb265">
-      <console name="localhost" type="STANDARD" schema="" session="Main" />
+      <console name="localhost" type="STANDARD" schema="movie" session="Main"><![CDATA[show table status;]]></console>
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">

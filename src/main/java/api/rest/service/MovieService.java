@@ -1,6 +1,7 @@
 package api.rest.service;
 
 import api.rest.domain.Movie;
+import api.rest.exception.BadRequestException;
 import api.rest.mapper.MovieMapper;
 import api.rest.repository.MovieRepository;
 import api.rest.requests.MoviePostRequestBody;
@@ -28,7 +29,7 @@ public class MovieService {
 
     public Movie findByIdOrThrowBadRequestException(long id){
         return movieRepository.findById(id)
-                .orElseThrow(()-> new ResponseStatusException(HttpStatus.BAD_REQUEST,"Movie id not found"));
+                .orElseThrow(()-> new BadRequestException("Movie id not found"));
     }
 
     public Movie save(MoviePostRequestBody moviePostRequestBody) {
