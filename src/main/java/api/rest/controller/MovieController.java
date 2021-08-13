@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -40,7 +41,7 @@ public class MovieController {
     }
 
     @PostMapping
-    public ResponseEntity<Movie> save( @RequestBody MoviePostRequestBody moviePostRequestBody){
+    public ResponseEntity<Movie> save( @RequestBody @Valid MoviePostRequestBody moviePostRequestBody){
         return new ResponseEntity<>(movieService.save(moviePostRequestBody),HttpStatus.CREATED);
     }
 
@@ -51,7 +52,7 @@ public class MovieController {
     }
 
     @PutMapping()
-    public ResponseEntity<Void> replace(@RequestBody MoviePutRequestBody moviePutRequestBody){
+    public ResponseEntity<Void> replace(@RequestBody @Valid MoviePutRequestBody moviePutRequestBody){
         movieService.replace(moviePutRequestBody);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
