@@ -1,15 +1,11 @@
 package api.rest.exception;
 
-import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
+import lombok.experimental.SuperBuilder;
 
-import java.time.LocalDateTime;
 
-@Data
-@Builder
-public class BadRequestExceptionDetails {
-    private int status;
-    private String title;
-    private String details;
-    private LocalDateTime timestamp;
+@Getter
+@SuperBuilder
+public class BadRequestExceptionDetails extends ExceptionDetails{
+
 }
